@@ -59,7 +59,7 @@ jobs:
 
       # Update kubeconfig for EKS
       - name: Update kubeconfig
-        run: aws eks update-kubeconfig --region us-east-1 --name portfoliotracker-eks
+        run: aws eks update-kubeconfig --region us-east-1 --name migration-eks-cluster
 
       # Deploy to EKS
       - name: Deploy to Kubernetes

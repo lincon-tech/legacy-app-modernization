@@ -27,10 +27,14 @@ jobs:
         working-directory: app
         run: npm install
 
+        # Set environment variables for Docker build
+    env:
+    IMAGE_TAG: ${{ github.sha }}
+      
 
       # Build Docker Image
       - name: Build Docker Image
-        run: docker build -f docker/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/ecommerce-app:${{ github.sha }} .
+        run: docker build -f docker/Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/ecommerce-app:$IMAGE_TAG .
 
       # Push to DockerHub
       - name: Log in to DockerHub
@@ -40,7 +44,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/ecommerce-app:${{ github.sha }}
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/ecommerce-app:$IMAGE_TAG
 
   deploy:
     needs: build
